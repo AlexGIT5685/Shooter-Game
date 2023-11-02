@@ -10,6 +10,7 @@ public class PlayerBehavior : MonoBehaviour
     public float horizontalScreenLimit;
     public float verticalScreenLimit;
     public GameObject bulletPrefab;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -40,14 +41,12 @@ public class PlayerBehavior : MonoBehaviour
         {
             transform.position = new Vector3(horizontalScreenLimit, transform.position.y, 0);
         }
-
-        if (transform.position.y > verticalScreenLimit)
-        {
-            transform.position = new Vector3(transform.position.x, -verticalScreenLimit, 0);
+        if (transform.position.y == 0.5f) {
+            transform.position = new Vector3(transform.position.x, 0.5f, 0);
         }
-        else if (transform.position.y < -verticalScreenLimit)
+        else if (transform.position.y == -4.5f)
         {
-            transform.position = new Vector3(transform.position.y, verticalScreenLimit, 0);
+            transform.position = new Vector3(transform.position.x, -4.5f, 0);
         }
     }
 
