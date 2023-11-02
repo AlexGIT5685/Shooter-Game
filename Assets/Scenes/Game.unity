@@ -249,6 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239ed8f83e0ae5646bc7ada7a31d12d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  horizontalInput: 0
+  verticalInput: 0
+  horizontalScreenLimit: 0
+  verticalScreenLimit: 0
+  bulletPrefab: {fileID: 3497712709602652917, guid: 28bbfc4ca4b1b7d4c99f5fc52cd2f442, type: 3}
 --- !u!65 &706990552
 BoxCollider:
   m_ObjectHideFlags: 0
