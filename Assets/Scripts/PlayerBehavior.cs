@@ -7,32 +7,35 @@ public class PlayerBehavior : MonoBehaviour
     public float speed;
     public float horizontalInput;
     public float verticalInput;
-    public float horizontalScreenLimit;
-    public float verticalScreenLimit;
+    public float horizontalScreenLimit;    
     public GameObject bulletPrefab;
-    
+    public float middleScreen;
+    public float bottomScreen;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {       
         speed = 4f;
-        horizontalScreenLimit = 9.5f;
-        verticalScreenLimit = 6.5f;
+        horizontalScreenLimit = 9.4f;        
+        middleScreen = 0.5f;
+        bottomScreen = -3.5f;        
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-        Shooting();
+        Shooting();        
     }
 
     void Movement()
     {
+        //Set the movement of the player object
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed);
 
+        //If player reaches the left or right horizontal boundary, they will be teleported to the opposing side. If on the left, sent to the right. If on the right, sent to the left.
         if (transform.position.x > horizontalScreenLimit)
         {
             transform.position = new Vector3(-horizontalScreenLimit, transform.position.y, 0);
@@ -41,21 +44,24 @@ public class PlayerBehavior : MonoBehaviour
         {
             transform.position = new Vector3(horizontalScreenLimit, transform.position.y, 0);
         }
-        if (transform.position.y == 0.5f) {
-            transform.position = new Vector3(transform.position.x, 0.5f, 0);
-        }
-        else if (transform.position.y == -4.5f)
+
+        //If the player reaches the mid point/middle of the screen, prevent them from moving higher. Additionally, if the player reaches the bottom of the screen, prevent them from going any lower.
+        if (transform.position.y >= middleScreen) 
         {
-            transform.position = new Vector3(transform.position.x, -4.5f, 0);
+            transform.position = new Vector3(transform.position.x, middleScreen, 0);
+        }
+        else if (transform.position.y <= bottomScreen)
+        {
+            transform.position = new Vector3(transform.position.x, bottomScreen, 0);
         }
     }
 
     void Shooting()
     {
+        //When space is pressed, bullets are spawned.
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         }
     }
-
 }

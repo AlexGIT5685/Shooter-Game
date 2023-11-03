@@ -41,9 +41,8 @@ public class EnemyThreeBehaviour : MonoBehaviour
         }
 
         if (transform.position.y < -8f)
-       {
+        {
             Destroy(this.gameObject);
         }
     }
 }
-
