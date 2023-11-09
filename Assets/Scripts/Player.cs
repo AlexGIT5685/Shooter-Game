@@ -90,8 +90,9 @@ public class Player : MonoBehaviour
     {
         if(whatIHit.tag == "Coin")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);                         
-            coinPickup.Play();         
+            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
+            coinPickup = GameObject.Find("Audio").GetComponent<AudioSource>(); 
+            coinPickup.Play();  
             Destroy(whatIHit.gameObject);
         }
     } 
