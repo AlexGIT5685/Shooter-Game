@@ -77,7 +77,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            Destory(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
