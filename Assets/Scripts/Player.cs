@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -10,12 +11,16 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10.38f;
     private float verticalScreenLimit = 4f;
     public int lives;
+    public TextMeshProUGUI lifeText;
+    public AudioSource coinPickup;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;  
         lives = 3;
+        lifeText = GameObject.Find("GameManager").GetComponent<GameManager>().livesText;
+        lifeText.text = "Lives: " + lives;
     }
 
     // Update is called once per frame
@@ -28,11 +33,13 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             lives++;
+            lifeText.text = "Lives: " + lives;
         }   
         //SHhhhhhhhhh this is a cheat for testing purposes.
         if (Input.GetKeyDown(KeyCode.K))
         {
             lives--;
+            lifeText.text = "Lives: " + lives;
         }     
     }
 
@@ -70,11 +77,22 @@ public class Player : MonoBehaviour
         lives--;        
         //lives -= 1;
         //lives = lives - 1;
+        lifeText.text = "Lives: " + lives;
         if (lives <= 0)
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-    }    
+    }   
+
+    void OnTriggerEnter2D(Collider2D whatIHit)
+    {
+        if(whatIHit.tag == "Coin")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);                         
+            coinPickup.Play();         
+            Destroy(whatIHit.gameObject);
+        }
+    } 
 }
