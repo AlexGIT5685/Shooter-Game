@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public GameObject coinPrefab;
+    public GameObject heartPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,8 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("SpawnEnemyOne", 1.5f, 7.5f);
         InvokeRepeating("SpawnEnemyTwo", 3.0f, 5.5f);
         InvokeRepeating("SpawnEnemyThree", 1.0f, 3.0f);
-        InvokeRepeating("SpawnCoin", 8.5f, 15.5f);
+        InvokeRepeating("SpawnCoin", 8.5f, 12.8f);
+        InvokeRepeating("SpawnHeart", 9.7f, 14.2f);
         cloudsMove = 1;
         score = 0;
         scoreText.text = "Score: " + score;
@@ -33,7 +35,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // SHHHHHHHhhhhhh another cheat used for testing.
+        if (Input.GetKeyDown(KeyCode.J))
+        {    
+            Instantiate(coinPrefab, new Vector3(Random.Range(-8.7f, 8.7f), Random.Range(-4.2f, 0f), 0), Quaternion.identity);
+            Destroy(GameObject.FindWithTag("Coin"), 90f);
+        }
     }
 
     void SpawnEnemyOne()
@@ -62,6 +69,13 @@ public class GameManager : MonoBehaviour
     void SpawnCoin()
     {
         Instantiate(coinPrefab, new Vector3(Random.Range(-8.7f, 8.7f), Random.Range(-4.2f, 0f), 0), Quaternion.identity);
+        Destroy(GameObject.FindWithTag("Coin"), 90f);
+    }
+
+    void SpawnHeart()
+    {
+        Instantiate(heartPrefab, new Vector3(Random.Range(-9f, 9f), Random.Range(-4.2f, 0f), 0), Quaternion.identity);
+        Destroy(GameObject.FindWithTag("Heart"), 100f);
     }
 
     public void GameOver()

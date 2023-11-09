@@ -11,8 +11,9 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10.38f;
     private float verticalScreenLimit = 4f;
     public int lives;
-    public TextMeshProUGUI lifeText;
-    public AudioSource coinPickup;
+    [HideInInspector] public TextMeshProUGUI lifeText;
+    [HideInInspector] public AudioSource coinPickup;
+    [HideInInspector] public AudioSource heartPickup;
 
     // Start is called before the first frame update
     void Start()
@@ -90,10 +91,27 @@ public class Player : MonoBehaviour
     {
         if(whatIHit.tag == "Coin")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
-            coinPickup = GameObject.Find("Audio").GetComponent<AudioSource>(); 
+            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);   
+            coinPickup = GameObject.Find("CoinAudio").GetComponent<AudioSource>();         
             coinPickup.Play();  
             Destroy(whatIHit.gameObject);
+        }
+        else if(whatIHit.tag == "Heart")
+        {   
+            // Should we make the coin sound play when above 3 health because they earn 1 score? Or should we always play health sound? 
+            heartPickup = GameObject.Find("HeartAudio").GetComponent<AudioSource>();        
+            heartPickup.Play();
+            Destroy(whatIHit.gameObject);
+
+            if (lives >= 3)
+            {
+                GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);                
+            }
+            else if (lives < 3)
+            {
+                lives++;
+                lifeText.text = "Lives: " + lives;
+            }
         }
     } 
 }
