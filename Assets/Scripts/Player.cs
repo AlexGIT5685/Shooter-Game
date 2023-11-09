@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10.38f;
     private float verticalScreenLimit = 4f;
     public int lives;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +22,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        Shooting();
+        Shooting();        
         
         //SHhhhhhhhhh this is a cheat for testing purposes.
         if (Input.GetKeyDown(KeyCode.L))
         {
             lives++;
-        }        
+        }   
+        //SHhhhhhhhhh this is a cheat for testing purposes.
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            lives--;
+        }     
     }
 
     void Movement ()
@@ -70,5 +76,5 @@ public class Player : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-    }
+    }    
 }

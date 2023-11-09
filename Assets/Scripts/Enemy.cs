@@ -20,6 +20,6 @@ public class Enemy : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(whatIHit.gameObject);            
             Destroy(this.gameObject);
-        }
+        }        
     }
 }

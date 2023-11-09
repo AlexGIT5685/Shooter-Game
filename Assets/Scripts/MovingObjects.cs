@@ -5,6 +5,11 @@ using UnityEngine;
 public class MovingObjects : MonoBehaviour
 {
     public int objectType;
+   
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
