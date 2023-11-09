@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -10,12 +11,15 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10.38f;
     private float verticalScreenLimit = 4f;
     public int lives;
+    public TextMeshProUGUI livesText;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;  
         lives = 3;
+        livesText = GameObject.Find("GameManager").GetComponent<GameManager>().livesText;
+        livesText.text = "Lives: " + lives;
     }
 
     // Update is called once per frame
@@ -67,9 +71,9 @@ public class Player : MonoBehaviour
 
     public void LoseLife()
     {
-        lives--;        
-        //lives -= 1;
-        //lives = lives - 1;
+        lives--;
+        livesText.text = "Lives: " + lives;
+
         if (lives <= 0)
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
