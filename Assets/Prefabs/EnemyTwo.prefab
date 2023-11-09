@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6338090305058049496}
   - component: {fileID: 6338090305058049497}
-  - component: {fileID: 3104745854096254070}
   - component: {fileID: -1034326178022390484}
   - component: {fileID: -527249985148769495}
   - component: {fileID: 510042060800444948}
+  - component: {fileID: -2621399019679521203}
   m_Layer: 0
   m_Name: EnemyTwo
   m_TagString: Untagged
@@ -88,19 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3104745854096254070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6338090305058049498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c78a856bdd7e6c64581775eb62be3c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 3
 --- !u!50 &-1034326178022390484
 Rigidbody2D:
   serializedVersion: 4
@@ -161,3 +148,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1726974094032839142, guid: 050b5503c98b44c4181dd0d9365e24a8, type: 3}
+--- !u!114 &-2621399019679521203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338090305058049498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef352ffa7ed2814db40cf0667dcc9b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectType: 2
