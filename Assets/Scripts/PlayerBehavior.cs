@@ -11,6 +11,8 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject bulletPrefab;
     public float middleScreen;
     public float bottomScreen;
+    public int lives;
+    public GameObject explosionPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,8 @@ public class PlayerBehavior : MonoBehaviour
         speed = 4f;
         horizontalScreenLimit = 9.4f;        
         middleScreen = 0.5f;
-        bottomScreen = -3.5f;        
+        bottomScreen = -3.5f;
+        lives = 3;        
     }
 
     // Update is called once per frame
@@ -62,6 +65,19 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        }
+    }
+
+    public void LoseLife()
+    {
+        lives--;
+        //lives -= 1;
+        //lives = lives -1;
+        if (lives <= 0)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destory(this.gameObject);
         }
     }
 }
