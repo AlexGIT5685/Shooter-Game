@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class MovingObjects : MonoBehaviour
 {
-    public int ObjectType;
+    public int objectType;
     private float timer = 0.0f;
 
     // Update is called once per frame
     void Update()
     {
-        if (ObjectType == 4)
+        if (objectType == 4)
         {
             // The object is the bullet.
             transform.Translate(Vector3.up * Time.deltaTime * 8f);
         }
-        else if (ObjectType == 1)
+        else if (objectType == 1)
         {
             // The object is enemy one.
             transform.Translate(Vector3.up * Time.deltaTime * 4.5f);
         }
-        else if (ObjectType == 2)
+        else if (objectType == 2)
         {
             // The object is enemy two.
             transform.Translate(Vector3.up * Time.deltaTime * 3f);
         }
-        else if (ObjectType == 3)
+        else if (objectType == 3)
         {
             // The object is enemy three.
             timer += Time.deltaTime;
@@ -54,7 +54,7 @@ public class MovingObjects : MonoBehaviour
                 transform.Translate(new Vector3(2.5f, .1f, 0) * Time.deltaTime * 3);
             }
         }
-        if (ObjectType == 5)
+        if (objectType == 5)
         {
             // The object is the coin.            
             transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * 2.9f);
@@ -65,7 +65,7 @@ public class MovingObjects : MonoBehaviour
                 transform.position = new Vector3(-transform.position.x, transform.position.y, 0);
             }
         }
-        if (ObjectType == 6)
+        if (objectType == 6)
         {
             // The object is the health powerup.            
             transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * 2.1f);
