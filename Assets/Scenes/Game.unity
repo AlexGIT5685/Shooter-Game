@@ -688,9 +688,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
+<<<<<<< Updated upstream
   m_audioClip: {fileID: 8300000, guid: 6e0fd7927bf9e8a42aceb13a55d47c99, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.55
+=======
+  m_audioClip: {fileID: 8300000, guid: f3bdfb04043c7ad4eac409176d10a4a5, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+>>>>>>> Stashed changes
   m_Pitch: 1
   Loop: 0
   Mute: 0

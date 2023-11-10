@@ -8,12 +8,20 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< Updated upstream:Assets/Prefabs/HealthPowerUp.prefab
   - component: {fileID: 5888342796966236255}
   - component: {fileID: 5888342796966236254}
   - component: {fileID: 5888342796966236249}
   - component: {fileID: 5888342796966236253}
   - component: {fileID: 5888342796966236252}
   - component: {fileID: 5606836455585546623}
+=======
+  - component: {fileID: 5688072999112648402}
+  - component: {fileID: 8512218519031723278}
+  - component: {fileID: -4970537259354330841}
+  - component: {fileID: -8084604520127690825}
+  - component: {fileID: 6777391154132283081}
+>>>>>>> Stashed changes:Assets/Prefabs/Heart.prefab
   m_Layer: 0
   m_Name: HealthPowerUp
   m_TagString: Heart
@@ -76,8 +84,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
+<<<<<<< Updated upstream:Assets/Prefabs/HealthPowerUp.prefab
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 30389bb059c0d424fa047d01c5c4547c, type: 3}
+=======
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 442f9e427ef252c41849dc92cc866210, type: 3}
+>>>>>>> Stashed changes:Assets/Prefabs/Heart.prefab
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,8 +158,13 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.14607406}
   serializedVersion: 2
+<<<<<<< Updated upstream:Assets/Prefabs/HealthPowerUp.prefab
   m_Radius: 2.3
 --- !u!114 &5606836455585546623
+=======
+  m_Radius: 2.43
+--- !u!114 &6777391154132283081
+>>>>>>> Stashed changes:Assets/Prefabs/Heart.prefab
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
