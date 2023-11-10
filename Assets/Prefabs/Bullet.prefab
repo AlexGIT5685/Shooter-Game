@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2120329210062752475}
   - component: {fileID: 2120329210062752472}
   - component: {fileID: -5444422187919717383}
+  - component: {fileID: -2219202089548006223}
   - component: {fileID: 2297584459841819474}
   - component: {fileID: 4823022758525780557}
-  - component: {fileID: 8282252005672722123}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Weapon
@@ -184,6 +184,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2219202089548006223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120329210062752473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78a856bdd7e6c64581775eb62be3c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
 --- !u!50 &2297584459841819474
 Rigidbody2D:
   serializedVersion: 4
@@ -231,6 +244,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.07, y: 0.16}
   m_EdgeRadius: 0
+<<<<<<< Updated upstream
+=======
 --- !u!114 &8282252005672722123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,4 +258,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef352ffa7ed2814db40cf0667dcc9b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectType: 4
+  objectType: 4
+>>>>>>> Stashed changes
