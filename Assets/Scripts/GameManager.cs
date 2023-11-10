@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Spawn our various prefabs like the player and enemies. Also, give our variables values and display the score value.
+        // Spawn things like the player and enemies. Also, display the score.
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         CreateSky();
         InvokeRepeating("SpawnEnemyOne", 1.5f, 7.5f);
@@ -33,20 +33,6 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-<<<<<<< Updated upstream
-    // Update is called once per frame
-    void Update()
-    {
-        // SHHHHHHHhhhhhh another cheat used for testing.
-        if (Input.GetKeyDown(KeyCode.J))
-        {    
-            Instantiate(coinPrefab, new Vector3(Random.Range(-8.7f, 8.7f), Random.Range(-4.2f, 0f), 0), Quaternion.identity);
-            Destroy(GameObject.FindWithTag("Coin"), 90f);
-        }
-    }
-
-=======
->>>>>>> Stashed changes
     void SpawnEnemyOne()
     {
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-8, 8), 8f, 0), Quaternion.Euler(0, 0, 180));
@@ -64,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     void CreateSky()
     {
-        // Create 50 clouds in the ranges set. "i" is a temporary variable that indicates how many clouds have spawned.
+        // Spawn 50 clouds. "i" is a temporary variable that indicates how many clouds have been created.
         for (int i = 0; i < 50; i++)
         {
             Instantiate(cloudPrefab, new Vector3(Random.Range(-11f, 11f), Random.Range(-7.5f, 7.5f), 0), Quaternion.identity);
@@ -84,18 +70,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {        
+    {
         CancelInvoke();
         cloudsMove = 0;
     }
 
     public void EarnScore(int scoreToAdd)
-    {        
+    {
         score = score + scoreToAdd;
         scoreText.text = "Score: " + score;
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
