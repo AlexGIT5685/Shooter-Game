@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7911440222715669319}
   - component: {fileID: 7911440222715669318}
-  - component: {fileID: -4093493758199225688}
   - component: {fileID: 3254010691721188}
   - component: {fileID: 5467962730069004372}
   - component: {fileID: 1519417784359755321}
+  - component: {fileID: -7517529743360635938}
   m_Layer: 0
   m_Name: EnemyOne
   m_TagString: Untagged
@@ -88,19 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4093493758199225688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7911440222715669313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c78a856bdd7e6c64581775eb62be3c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 2
 --- !u!61 &3254010691721188
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,8 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1726974094032839142, guid: 050b5503c98b44c4181dd0d9365e24a8, type: 3}
-<<<<<<< Updated upstream
-=======
 --- !u!114 &-7517529743360635938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,4 +161,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 1
->>>>>>> Stashed changes

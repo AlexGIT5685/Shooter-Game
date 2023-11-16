@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerSpeed = 6f;  
+        playerSpeed = 6f;
         lives = 3;
         livesText = GameObject.Find("GameManager").GetComponent<GameManager>().livesText;
         livesText.text = "Lives: " + lives;
@@ -28,26 +28,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        Shooting();        
-<<<<<<< Updated upstream
-        
-        //SHhhhhhhhhh this is a cheat for testing purposes.
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            lives++;
-            lifeText.text = "Lives: " + lives;
-        }   
-        //SHhhhhhhhhh this is a cheat for testing purposes.
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            lives--;
-            lifeText.text = "Lives: " + lives;
-        }     
-=======
->>>>>>> Stashed changes
+        Shooting();
     }
 
-    void Movement ()
+    void Movement()
     {
         transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * playerSpeed);
 
@@ -70,7 +54,7 @@ public class Player : MonoBehaviour
 
     void Shooting()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         }
@@ -78,57 +62,37 @@ public class Player : MonoBehaviour
 
     public void LoseLife()
     {
-<<<<<<< Updated upstream
-        lives--;        
-        //lives -= 1;
-        //lives = lives - 1;
-        lifeText.text = "Lives: " + lives;
-=======
-        // Subtract a life and display the current lives value. If the player has no more lives, end the game.
+        // Subtract life, display lives text, and run game over if 0 lives left.
         lives--;
         livesText.text = "Lives: " + lives;
->>>>>>> Stashed changes
         if (lives <= 0)
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-    }   
+    }
 
     void OnTriggerEnter2D(Collider2D whatIHit)
     {
-        if(whatIHit.tag == "Coin")
+        if (whatIHit.tag == "Coin")
         {
-<<<<<<< Updated upstream
-            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);   
-            coinPickup = GameObject.Find("CoinAudio").GetComponent<AudioSource>();         
-            coinPickup.Play();  
-            Destroy(whatIHit.gameObject);
-        }
-        else if(whatIHit.tag == "Heart")
-        {   
-            // Should we make the coin sound play when above 3 health because they earn 1 score? Or should we always play health sound? 
-            heartPickup = GameObject.Find("HeartAudio").GetComponent<AudioSource>();        
-=======
-            // Give the player a point, play the coin sound, and destroy the coin when the player collides with it.
+            // If the coin is hit, add 1 score, play the coin sound, and destroy the coin.
             GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
             coinPickup = GameObject.Find("CoinAudio").GetComponent<AudioSource>();
             coinPickup.Play();
             Destroy(whatIHit.gameObject);
         }
         else if (whatIHit.tag == "Heart")
-        {
-            // Play pickup audio when player collides with heart, and destroy the heart.
+        { 
+            // If the heart is hit, play the heart sound, destroy it, and check the number of lives. If more than 3, give 1 score. Else if less than 3, give 1 life.
             heartPickup = GameObject.Find("HeartAudio").GetComponent<AudioSource>();
->>>>>>> Stashed changes
             heartPickup.Play();
             Destroy(whatIHit.gameObject);
 
-            // If the player has 3 lives or more, give them 1 score instead of a life. Else if they have less than 3 lives, give them 1 life and display the current lives on screen.
             if (lives >= 3)
             {
-                GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);                
+                GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
             }
             else if (lives < 3)
             {
@@ -136,9 +100,5 @@ public class Player : MonoBehaviour
                 livesText.text = "Lives: " + lives;
             }
         }
-<<<<<<< Updated upstream
-    } 
-=======
     }
->>>>>>> Stashed changes
 }
