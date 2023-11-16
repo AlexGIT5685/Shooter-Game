@@ -54,10 +54,11 @@ public class MovingObjects : MonoBehaviour
                 transform.Translate(new Vector3(2.5f, .1f, 0) * Time.deltaTime * 3);
             }
         }
-        if (objectType == 5)
+        else if (objectType == 5)
         {
             // The object is the coin.            
             transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * 2.9f);
+            Destroy(this.gameObject, 3.6f);
 
             if (transform.position.x >= 9.8f)
             {
@@ -65,12 +66,25 @@ public class MovingObjects : MonoBehaviour
                 transform.position = new Vector3(-transform.position.x, transform.position.y, 0);
             }
         }
-        if (objectType == 6)
+        else if (objectType == 6)
         {
             // The object is the health powerup.            
             transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * 2.1f);
+            Destroy(this.gameObject, 3.6f);
 
             if (transform.position.x <= -9.8f)
+            {
+                // When it reaches the edge, go to the opposite side.
+                transform.position = new Vector3(-transform.position.x, transform.position.y, 0);
+            }
+        }
+        else if (objectType == 7)
+        {
+            // The object is the powerup.            
+            transform.Translate(new Vector3(1, 0.16f, 0) * Time.deltaTime * 2.9f);
+            Destroy(this.gameObject, 3.6f);
+
+            if (transform.position.x >= 9.8f)
             {
                 // When it reaches the edge, go to the opposite side.
                 transform.position = new Vector3(-transform.position.x, transform.position.y, 0);

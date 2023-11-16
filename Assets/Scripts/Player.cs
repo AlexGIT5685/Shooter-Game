@@ -11,17 +11,25 @@ public class Player : MonoBehaviour
     private float horizontalScreenLimit = 10.38f;
     private float verticalScreenLimit = 4f;
     public int lives;
-    [HideInInspector] public TextMeshProUGUI livesText;
-    [HideInInspector] public AudioSource coinPickup;
-    [HideInInspector] public AudioSource heartPickup;
+    private GameObject gM;
+    // private GameManager gMS;
+    public AudioClip coin;
+    public AudioClip health;
+    public AudioClip powerup;
+    public AudioClip powerdown;
+    private bool upgradedWeapon;
+    public GameObject thruster;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;
+        upgradedWeapon = false;
         lives = 3;
-        livesText = GameObject.Find("GameManager").GetComponent<GameManager>().livesText;
-        livesText.text = "Lives: " + lives;
+        gM = GameObject.Find("GameManager");
+        // gMS = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // As seen above, you can use the GameManager script instead of the GameManager object.
+        // Using the script shortens your lines of code, but it may mess up if you change scripts.
     }
 
     // Update is called once per frame
@@ -54,9 +62,15 @@ public class Player : MonoBehaviour
 
     void Shooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !upgradedWeapon)
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && upgradedWeapon)
+        {
+            Instantiate(bulletPrefab, transform.position + new Vector3(-0.5f, 1, 0), Quaternion.Euler(0, 0, 30f));
+            Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(bulletPrefab, transform.position + new Vector3(0.5f, 1, 0), Quaternion.Euler(0, 0, -30f));
         }
     }
 
@@ -64,41 +78,83 @@ public class Player : MonoBehaviour
     {
         // Subtract life, display lives text, and run game over if 0 lives left.
         lives--;
-        livesText.text = "Lives: " + lives;
+        gM.GetComponent<GameManager>().LivesChange(lives);
         if (lives <= 0)
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().GameOver();
+            gM.GetComponent<GameManager>().GameOver();
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D whatIHit)
+    void OnTriggerEnter2D(Collider2D pickup)
     {
-        if (whatIHit.tag == "Coin")
+        switch(pickup.name)
         {
-            // If the coin is hit, add 1 score, play the coin sound, and destroy the coin.
-            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
-            coinPickup = GameObject.Find("CoinAudio").GetComponent<AudioSource>();
-            coinPickup.Play();
-            Destroy(whatIHit.gameObject);
+            case "Coin(Clone)":
+                // Picked up coin.
+                AudioSource.PlayClipAtPoint(coin, transform.position);   
+                gM.GetComponent<GameManager>().EarnScore(1);
+                Destroy(pickup.gameObject);        
+                break;            
+            case "Heart(Clone)":
+                // Picked up health.
+                AudioSource.PlayClipAtPoint(health, transform.position);
+                if (lives >= 3)
+                {
+                    gM.GetComponent<GameManager>().EarnScore(1);
+                }
+                else if (lives < 3)
+                {
+                    lives++;
+                    gM.GetComponent<GameManager>().LivesChange(lives);
+                }
+                Destroy(pickup.gameObject);
+                break;
+            case "Powerup(Clone)":
+                // Picked up powerup.
+                AudioSource.PlayClipAtPoint(powerup, transform.position);
+                Destroy(pickup.gameObject);
+                int tempInt;
+                tempInt = Random.Range(1, 4);
+                if (tempInt == 1)
+                {
+                    // Speed powerup.
+                    playerSpeed = 10f;
+                    StartCoroutine("SpeedPowerDown");
+                    gM.GetComponent<GameManager>().PowerupChange("Speed");
+                    thruster.SetActive(true);
+                }
+                else if (tempInt == 2)
+                {
+                    // Weapon powerup.
+                    upgradedWeapon = true;
+                    StartCoroutine("WeaponPowerDown");
+                    gM.GetComponent<GameManager>().PowerupChange("Weapon");
+                }
+                else if (tempInt == 3)
+                {
+                    // Shield powerup.
+                    gM.GetComponent<GameManager>().PowerupChange("Shield");
+                }
+                break;
         }
-        else if (whatIHit.tag == "Heart")
-        { 
-            // If the heart is hit, play the heart sound, destroy it, and check the number of lives. If more than 3, give 1 score. Else if less than 3, give 1 life.
-            heartPickup = GameObject.Find("HeartAudio").GetComponent<AudioSource>();
-            heartPickup.Play();
-            Destroy(whatIHit.gameObject);
+    }
 
-            if (lives >= 3)
-            {
-                GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
-            }
-            else if (lives < 3)
-            {
-                lives++;
-                livesText.text = "Lives: " + lives;
-            }
-        }
+    IEnumerator SpeedPowerDown()
+    {
+        yield return new WaitForSeconds(4f);
+        AudioSource.PlayClipAtPoint(powerdown, transform.position);
+        playerSpeed = 6f;
+        thruster.SetActive(false);
+        gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+    }
+
+    IEnumerator WeaponPowerDown()
+    {
+        yield return new WaitForSeconds(4f);
+        AudioSource.PlayClipAtPoint(powerdown, transform.position);
+        upgradedWeapon = false;
+        gM.GetComponent<GameManager>().PowerupChange("No Powerup");
     }
 }
