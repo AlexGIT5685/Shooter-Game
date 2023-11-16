@@ -211,14 +211,11 @@ MonoBehaviour:
   explosionPrefab: {fileID: 1726974094032839142, guid: 050b5503c98b44c4181dd0d9365e24a8, type: 3}
   playerSpeed: 0
   lives: 0
-<<<<<<< HEAD
-=======
   coin: {fileID: 8300000, guid: 6e0fd7927bf9e8a42aceb13a55d47c99, type: 3}
   health: {fileID: 8300000, guid: b37762b30a3e0fa4991e276dc444af4f, type: 3}
   powerup: {fileID: 8300000, guid: e5715ce2007f9304ea45f297d88aaa70, type: 3}
   powerdown: {fileID: 8300000, guid: f21468b6c203ab94fb2955a19ab4eb4e, type: 3}
   thruster: {fileID: 2110464788210134945}
->>>>>>> Dormio-san-(Liam)
 --- !u!50 &3853283547526344335
 Rigidbody2D:
   serializedVersion: 4
