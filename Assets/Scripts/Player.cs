@@ -17,14 +17,20 @@ public class Player : MonoBehaviour
     public AudioClip health;
     public AudioClip powerup;
     public AudioClip powerdown;
+    public AudioClip bulletSound;
     private bool upgradedWeapon;
     public GameObject thruster;
+    private bool shieldOn;
+    public GameObject shield;
+    private bool speedBoost;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;
+        speedBoost = false;
         upgradedWeapon = false;
+        shieldOn = false;
         lives = 3;
         gM = GameObject.Find("GameManager");
         // gMS = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -65,19 +71,44 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !upgradedWeapon)
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            AudioSource.PlayClipAtPoint(bulletSound, transform.position);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && upgradedWeapon)
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(-0.5f, 1, 0), Quaternion.Euler(0, 0, 30f));
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             Instantiate(bulletPrefab, transform.position + new Vector3(0.5f, 1, 0), Quaternion.Euler(0, 0, -30f));
+            AudioSource.PlayClipAtPoint(bulletSound, transform.position);
         }
     }
 
     public void LoseLife()
     {
-        // Subtract life, display lives text, and run game over if 0 lives left.
-        lives--;
+        // Check if a shield is active. If there is, get rid of it. If not, lose a life.
+        if (shieldOn)
+        {
+            AudioSource.PlayClipAtPoint(powerdown, transform.position);
+            shield.SetActive(false);
+            shieldOn = false;
+            // Check to see if other powerups are active. If there is, display the text for that powerup.
+            if (speedBoost)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("Speed");
+            }
+            else if (upgradedWeapon)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("Weapon");
+            }
+            else if (!speedBoost && !upgradedWeapon)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+            }
+        }
+        else if (!shieldOn)
+        {
+            // Lose a life if there is no shield.
+            lives--;
+        }
         gM.GetComponent<GameManager>().LivesChange(lives);
         if (lives <= 0)
         {
@@ -89,14 +120,14 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D pickup)
     {
-        switch(pickup.name)
+        switch (pickup.name)
         {
             case "Coin(Clone)":
                 // Picked up coin.
-                AudioSource.PlayClipAtPoint(coin, transform.position);   
+                AudioSource.PlayClipAtPoint(coin, transform.position);
                 gM.GetComponent<GameManager>().EarnScore(1);
-                Destroy(pickup.gameObject);        
-                break;            
+                Destroy(pickup.gameObject);
+                break;
             case "Heart(Clone)":
                 // Picked up health.
                 AudioSource.PlayClipAtPoint(health, transform.position);
@@ -120,6 +151,7 @@ public class Player : MonoBehaviour
                 if (tempInt == 1)
                 {
                     // Speed powerup.
+                    speedBoost = true;
                     playerSpeed = 10f;
                     StartCoroutine("SpeedPowerDown");
                     gM.GetComponent<GameManager>().PowerupChange("Speed");
@@ -135,7 +167,9 @@ public class Player : MonoBehaviour
                 else if (tempInt == 3)
                 {
                     // Shield powerup.
+                    shieldOn = true;
                     gM.GetComponent<GameManager>().PowerupChange("Shield");
+                    shield.SetActive(true);
                 }
                 break;
         }
@@ -146,8 +180,21 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(4f);
         AudioSource.PlayClipAtPoint(powerdown, transform.position);
         playerSpeed = 6f;
+        speedBoost = false;
         thruster.SetActive(false);
-        gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        // Check to see if other powerups are active. If there is, display the text for that powerup.
+        if (shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Shield");
+        }
+        else if (upgradedWeapon)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Weapon");
+        }
+        else if (!shieldOn && !upgradedWeapon)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        }
     }
 
     IEnumerator WeaponPowerDown()
@@ -156,5 +203,18 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(powerdown, transform.position);
         upgradedWeapon = false;
         gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        // Check to see if other powerups are active. If there is, display the text for that powerup.
+        if (shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Shield");
+        }
+        else if (speedBoost)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Speed");
+        }
+        else if (!shieldOn && !speedBoost)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        }
     }
 }
