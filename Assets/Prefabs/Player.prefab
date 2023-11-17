@@ -322,6 +322,7 @@ MonoBehaviour:
   health: {fileID: 8300000, guid: b37762b30a3e0fa4991e276dc444af4f, type: 3}
   powerup: {fileID: 8300000, guid: e5715ce2007f9304ea45f297d88aaa70, type: 3}
   powerdown: {fileID: 8300000, guid: f21468b6c203ab94fb2955a19ab4eb4e, type: 3}
+  bulletSound: {fileID: 8300000, guid: 88870b7bee7400f46acd7cccbfecd76a, type: 3}
   thruster: {fileID: 2110464788210134945}
   shield: {fileID: 4733680862047244162}
 --- !u!50 &3853283547526344335
