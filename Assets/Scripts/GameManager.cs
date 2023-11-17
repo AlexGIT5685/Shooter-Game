@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Game");
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Instantiate(thingsThatSpawn[2], new Vector3(Random.Range(-8.7f, 8.7f), Random.Range(-4.2f, 0f), 0), Quaternion.identity);
+        }
     }
 
     void SpawnEnemyOne()

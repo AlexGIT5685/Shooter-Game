@@ -19,12 +19,15 @@ public class Player : MonoBehaviour
     public AudioClip powerdown;
     private bool upgradedWeapon;
     public GameObject thruster;
+    private bool shieldOn;
+    public GameObject shield;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;
         upgradedWeapon = false;
+        shieldOn = false;
         lives = 3;
         gM = GameObject.Find("GameManager");
         // gMS = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -77,7 +80,17 @@ public class Player : MonoBehaviour
     public void LoseLife()
     {
         // Subtract life, display lives text, and run game over if 0 lives left.
-        lives--;
+        if (shieldOn)
+        {
+            AudioSource.PlayClipAtPoint(powerdown, transform.position);
+            shield.SetActive(false);
+            shieldOn = false;
+            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        }       
+        else if (!shieldOn)
+        {
+            lives--;            
+        }
         gM.GetComponent<GameManager>().LivesChange(lives);
         if (lives <= 0)
         {
@@ -135,7 +148,9 @@ public class Player : MonoBehaviour
                 else if (tempInt == 3)
                 {
                     // Shield powerup.
+                    shieldOn = true;
                     gM.GetComponent<GameManager>().PowerupChange("Shield");
+                    shield.SetActive(true);
                 }
                 break;
         }
@@ -147,7 +162,14 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(powerdown, transform.position);
         playerSpeed = 6f;
         thruster.SetActive(false);
-        gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        if (shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Shield");
+        }
+        else if (!shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        }
     }
 
     IEnumerator WeaponPowerDown()
@@ -156,5 +178,13 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(powerdown, transform.position);
         upgradedWeapon = false;
         gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        if (shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Shield");
+        }
+        else if (!shieldOn)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+        }
     }
 }
