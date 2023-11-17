@@ -21,11 +21,13 @@ public class Player : MonoBehaviour
     public GameObject thruster;
     private bool shieldOn;
     public GameObject shield;
+    private bool speedBoost;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSpeed = 6f;
+        speedBoost = false;
         upgradedWeapon = false;
         shieldOn = false;
         lives = 3;
@@ -85,7 +87,18 @@ public class Player : MonoBehaviour
             AudioSource.PlayClipAtPoint(powerdown, transform.position);
             shield.SetActive(false);
             shieldOn = false;
-            gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+            if(speedBoost)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("Speed");
+            }
+            else if (upgradedWeapon)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("Weapon");
+            }
+            else if (!speedBoost && !upgradedWeapon)
+            {
+                gM.GetComponent<GameManager>().PowerupChange("No Powerup");
+            }
         }       
         else if (!shieldOn)
         {
@@ -133,6 +146,7 @@ public class Player : MonoBehaviour
                 if (tempInt == 1)
                 {
                     // Speed powerup.
+                    speedBoost = true;
                     playerSpeed = 10f;
                     StartCoroutine("SpeedPowerDown");
                     gM.GetComponent<GameManager>().PowerupChange("Speed");
@@ -161,12 +175,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(4f);
         AudioSource.PlayClipAtPoint(powerdown, transform.position);
         playerSpeed = 6f;
+        speedBoost = false;
         thruster.SetActive(false);
         if (shieldOn)
         {
             gM.GetComponent<GameManager>().PowerupChange("Shield");
         }
-        else if (!shieldOn)
+        else if (upgradedWeapon)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Weapon");
+        }
+        else if (!shieldOn && !upgradedWeapon)
         {
             gM.GetComponent<GameManager>().PowerupChange("No Powerup");
         }
@@ -182,7 +201,11 @@ public class Player : MonoBehaviour
         {
             gM.GetComponent<GameManager>().PowerupChange("Shield");
         }
-        else if (!shieldOn)
+        else if (speedBoost)
+        {
+            gM.GetComponent<GameManager>().PowerupChange("Speed");
+        }
+        else if (!shieldOn && !speedBoost)
         {
             gM.GetComponent<GameManager>().PowerupChange("No Powerup");
         }
