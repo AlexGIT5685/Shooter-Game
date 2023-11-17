@@ -12,12 +12,11 @@ public class Player : MonoBehaviour
     private float verticalScreenLimit = 4f;
     public int lives;
     private GameObject gM;
-    // private GameManager gMS;
-    public AudioClip coin;
-    public AudioClip health;
-    public AudioClip powerup;
-    public AudioClip powerdown;
-    public AudioClip bulletSound;
+    public AudioSource coin;
+    public AudioSource health;
+    public AudioSource powerup;
+    public AudioSource powerdown;
+    public AudioSource bulletSound;
     private bool upgradedWeapon;
     public GameObject thruster;
     private bool shieldOn;
@@ -33,9 +32,6 @@ public class Player : MonoBehaviour
         shieldOn = false;
         lives = 3;
         gM = GameObject.Find("GameManager");
-        // gMS = GameObject.Find("GameManager").GetComponent<GameManager>();
-        // As seen above, you can use the GameManager script instead of the GameManager object.
-        // Using the script shortens your lines of code, but it may mess up if you change scripts.
     }
 
     // Update is called once per frame
@@ -71,14 +67,14 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !upgradedWeapon)
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-            AudioSource.PlayClipAtPoint(bulletSound, transform.position);
+            bulletSound.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Space) && upgradedWeapon)
         {
             Instantiate(bulletPrefab, transform.position + new Vector3(-0.5f, 1, 0), Quaternion.Euler(0, 0, 30f));
             Instantiate(bulletPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             Instantiate(bulletPrefab, transform.position + new Vector3(0.5f, 1, 0), Quaternion.Euler(0, 0, -30f));
-            AudioSource.PlayClipAtPoint(bulletSound, transform.position);
+            bulletSound.Play();
         }
     }
 
@@ -87,7 +83,7 @@ public class Player : MonoBehaviour
         // Check if a shield is active. If there is, get rid of it. If not, lose a life.
         if (shieldOn)
         {
-            AudioSource.PlayClipAtPoint(powerdown, transform.position);
+            powerdown.Play();
             shield.SetActive(false);
             shieldOn = false;
             // Check to see if other powerups are active. If there is, display the text for that powerup.
@@ -124,13 +120,13 @@ public class Player : MonoBehaviour
         {
             case "Coin(Clone)":
                 // Picked up coin.
-                AudioSource.PlayClipAtPoint(coin, transform.position);
+                coin.Play();
                 gM.GetComponent<GameManager>().EarnScore(1);
                 Destroy(pickup.gameObject);
                 break;
             case "Heart(Clone)":
                 // Picked up health.
-                AudioSource.PlayClipAtPoint(health, transform.position);
+                health.Play();
                 if (lives >= 3)
                 {
                     gM.GetComponent<GameManager>().EarnScore(1);
@@ -144,7 +140,7 @@ public class Player : MonoBehaviour
                 break;
             case "Powerup(Clone)":
                 // Picked up powerup.
-                AudioSource.PlayClipAtPoint(powerup, transform.position);
+                powerup.Play();
                 Destroy(pickup.gameObject);
                 int tempInt;
                 tempInt = Random.Range(1, 4);
@@ -178,7 +174,7 @@ public class Player : MonoBehaviour
     IEnumerator SpeedPowerDown()
     {
         yield return new WaitForSeconds(4f);
-        AudioSource.PlayClipAtPoint(powerdown, transform.position);
+        powerdown.Play();
         playerSpeed = 6f;
         speedBoost = false;
         thruster.SetActive(false);
@@ -200,7 +196,7 @@ public class Player : MonoBehaviour
     IEnumerator WeaponPowerDown()
     {
         yield return new WaitForSeconds(4f);
-        AudioSource.PlayClipAtPoint(powerdown, transform.position);
+        powerdown.Play();
         upgradedWeapon = false;
         gM.GetComponent<GameManager>().PowerupChange("No Powerup");
         // Check to see if other powerups are active. If there is, display the text for that powerup.
